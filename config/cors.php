@@ -21,7 +21,9 @@ return [
         'login',
         'logout',
         'register',
-        'email/verification-notification'
+        'email/verification-notification',
+        'forgot-password',
+        'reset-password',
     ],
 
     'allowed_methods' => ['*'],

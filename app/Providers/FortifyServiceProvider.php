@@ -7,6 +7,7 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Carbon\Carbon;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -64,6 +65,10 @@ class FortifyServiceProvider extends ServiceProvider
                 $params["expires"] .
                 "&signature=" .
                 $signature;
+        });
+        ResetPassword::createUrlUsing(function ($notifiable, $token) {
+            return env('FRONTEND_URL') . '/auth/reset-password/' . $token .
+                '/' . $notifiable->getEmailForPasswordReset();
         });
 
         Fortify::loginView(function () {
